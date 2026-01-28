@@ -1,0 +1,8 @@
+build_id=fdwWSmWAPHPnZtPV4ppjuwd3d31ME1RS
+push_ts=1769566753.959877579
+cache_exists=true
+cache_size=2.1M
+start_ts=1769566753
+end_ts=1769566761
+next_version=16.1.6
+bundler=turbopack

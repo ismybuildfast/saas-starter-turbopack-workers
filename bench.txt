@@ -1,0 +1,35 @@
+# Build Benchmarking Setup (from nextjs-starter)
+
+## Files involved:
+
+### 1. `build-meta` file (renamed from `build` to avoid .gitignore conflict)
+Contains build metadata variables:
+- `build_id` - A unique identifier for the build (32-char random string)
+- `push_ts` - Timestamp when the push/deploy was triggered
+
+### 2. `build.sh` script
+Benchmark wrapper script that:
+1. Sources the `build-meta` file to load metadata variables
+2. Creates `public/bench.txt` with benchmark data
+3. Records `start_ts` before running the build
+4. Runs the actual build command (`npm run build-only`)
+5. Records `end_ts` after build completes
+6. Outputs the benchmark file contents
+
+### 3. `package.json` changes
+- `"build": "./build.sh"` - Main build command now runs the benchmark wrapper
+- `"build-only": "next build"` - Actual Next.js build command
+
+## Output format (public/bench.txt):
+```
+build_id=<unique-id>
+push_ts=<push-timestamp>
+start_ts=<build-start-timestamp>
+end_ts=<build-end-timestamp>
+```
+
+This allows calculating:
+- Total build time: end_ts - start_ts
+- Time from push to build start: start_ts - push_ts
+- Total deploy time: end_ts - push_ts
+
